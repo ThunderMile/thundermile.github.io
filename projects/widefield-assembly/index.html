@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mile Huang’s Unreal Engine 5.6 microscope visualization, featuring an assembly timeline, component inspection, and a hands-on optical bench.">
+  <meta name="theme-color" content="#f9faf8">
+  <title>WideField Assembly | Mile Huang</title>
+  <link rel="icon" href="../../assets/mark.png" type="image/png">
+  <link rel="stylesheet" href="../../assets/site.css">
+  <script src="../../assets/site.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap header-row">
+      <a class="brand" href="../../index.html" aria-label="Mile Huang homepage"><span class="monogram" aria-hidden="true">mh.</span><span>Mile Huang</span></a>
+      <nav aria-label="Main navigation"><a href="../../index.html#work">Work</a><a href="../../index.html#about">About</a><a class="profile-link" href="https://github.com/ThunderMile">GitHub</a></nav>
+    </div>
+  </header>
+  <main id="main" class="wrap case">
+    <div class="case-head">
+      <p class="kicker"><span aria-hidden="true"></span> Microscope visualization</p>
+      <h1>WideField<br>Assembly<span>.</span></h1>
+      <p class="case-intro">An interactive model of a wide-field microscope. Inspect the optics, step through the build sequence, and assemble a setup of your own in Unreal Engine 5.6.</p>
+      <div class="actions"><a class="button primary" href="#demo">Watch the demo</a><a class="text-link" href="https://github.com/uw-loci/WideFieldAssembly">Project on GitHub</a></div>
+    </div>
+
+    <section id="demo" class="demo-section" aria-labelledby="demo-title">
+      <div class="section-heading"><h2 id="demo-title">Unreal demo</h2><span class="rule" aria-hidden="true"></span><span class="meta">1 min 20 sec</span></div>
+      <video controls playsinline preload="none" aria-label="WideField Assembly demonstration" aria-describedby="demo-caption" width="1280" height="720" poster="../../assets/media/assembly-view.webp">
+        <source src="../../assets/media/widefield-demo.mp4" type="video/mp4">
+        <a href="../../assets/media/widefield-demo.mp4">Open the demo video</a>
+      </video>
+      <p class="caption" id="demo-caption">Silent screen recording with on-screen labels. The demo moves from inspecting the model to playing the assembly sequence, snapping parts into place, and tracing light through the optics.</p>
+    </section>
+
+    <section class="case-section" aria-labelledby="context-title">
+      <h2 id="context-title">Project context</h2>
+      <div class="case-prose">
+        <p>On a physical optical bench, the position of each lens, mirror, and mount matters. WideField Assembly gives learners a virtual bench where they can inspect those relationships before handling the hardware.</p>
+        <p>I worked on the visualization during my OpenTIRF internship with UW–Madison’s Open Source Program Office, from summer 2025 to summer 2026. The model in this demo is a wide-field microscope.</p>
+        <a class="text-link" href="https://ospo.wisc.edu/project-catalog/opentirf/">UW–Madison project catalog</a>
+      </div>
+    </section>
+
+    <section class="case-section" id="contributions" aria-labelledby="contributions-title">
+      <h2 id="contributions-title">My contributions</h2>
+      <div class="case-prose">
+        <h3>Bringing the build sequence into Unreal</h3>
+        <p>I imported the Blender assembly animations into Unreal and implemented interactions for exploring the model. The playback controls let a learner pause at a particular step or drag the timeline to revisit how two parts fit together.</p>
+        <h3>Making the logic easier to review</h3>
+        <p>I converted core Blueprint logic to C++. That put changes to the interaction code into a text format that contributors could compare and review in Git.</p>
+        <a class="text-link" href="https://docs.google.com/presentation/d/e/2PACX-1vQqQznaRfz3dZG34zuqsO4gjYQhWX9WYfamYNvpAwb5Oa20B3D5E0jXrg7YAR4dM2YPDIboZbRiBwyH/pub">My summer 2026 lightning talk</a>
+        <!-- Add another confirmed contribution here, with the implementation decision and a supporting example. -->
+      </div>
+    </section>
+
+    <section class="gallery-section" aria-labelledby="gallery-title">
+      <div class="section-heading"><h2 id="gallery-title">Screenshots</h2><span class="rule" aria-hidden="true"></span></div>
+      <div class="gallery">
+        <figure><a class="shot-link" href="../../assets/media/component-inspection.webp" aria-label="Enlarge component inspection screenshot"><img src="../../assets/media/component-inspection.webp" width="1440" height="810" alt="A selected breadboard has an orange outline, with its part description and thumbnail at the left."></a>
+          <figcaption><h3>Inspecting a component</h3><p>Selecting a part reveals its name and description. The list at the right tracks components visible in the scene.</p></figcaption></figure>
+        <figure><a class="shot-link" href="../../assets/media/beam-path.webp" aria-label="Enlarge beam path screenshot"><img src="../../assets/media/beam-path.webp" width="1440" height="810" alt="A bright beam crosses the optical bench and changes direction at a mounted optical component."></a>
+          <figcaption><h3>Tracing the light path</h3><p>The beam makes the optical layout visible. Changing a mirror’s orientation changes where the light travels.</p></figcaption></figure>
+        <!-- Add future stills as figure elements with alt text and a caption. -->
+      </div>
+    </section>
+    <a class="text-link return-link" href="../../index.html#work">Back to featured work</a>
+  </main>
+  <dialog class="lightbox" aria-label="Screenshot preview"><button class="button" type="button" autofocus>Close</button><img alt=""></dialog>
+  <footer><div class="wrap footer-row"><span>Mile Huang</span><a href="#top">Back to top</a></div></footer>
+</body>
+</html>

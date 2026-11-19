@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Mile Huang studies Computer Science and Data Science at UW–Madison. Explore Mile’s Unreal Engine microscope visualization and interactive assembly work.">
+  <meta name="theme-color" content="#f9faf8">
+  <title>Mile Huang | Portfolio</title>
+  <link rel="icon" href="assets/mark.png" type="image/png">
+  <link rel="stylesheet" href="assets/site.css">
+  <script src="assets/site.js" defer></script>
+</head>
+<body id="top">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <div class="wrap header-row">
+      <a class="brand" href="index.html" aria-label="Mile Huang homepage"><span class="monogram" aria-hidden="true">mh.</span><span>Mile Huang</span></a>
+      <nav aria-label="Main navigation"><a href="#work">Work</a><a href="#about">About</a><a class="profile-link" href="https://github.com/ThunderMile">GitHub</a></nav>
+    </div>
+  </header>
+
+  <main id="main" class="wrap">
+    <section class="hero" aria-labelledby="intro-title">
+      <div class="intro">
+        <p class="kicker"><span aria-hidden="true"></span> Student portfolio</p>
+        <h1 id="intro-title">Mile<br> Huang<span>.</span></h1>
+        <p class="intro-copy">I study Computer Science and Data Science at <strong>UW–Madison</strong>. My interests span software engineering, technical game design, and 3D art.</p>
+        <div class="actions"><a class="button primary" href="#work">Explore my work</a><a class="text-link" href="#about">About me</a></div>
+      </div>
+      <figure class="study" aria-labelledby="study-caption">
+        <div class="drawing-board" data-study>
+          <div class="board-head"><span class="scope-icon" aria-hidden="true"></span><span>Component study</span></div>
+          <span class="board-engine">UE 5.6</span>
+          <img class="mounts" src="assets/media/optical-mounts.webp" width="656" height="695" alt="Two upright optical mounts with a lens tube and ring aligned above them.">
+          <img class="mounts outline" src="assets/media/optical-mounts-outline.webp" width="656" height="695" alt="" hidden>
+          <span aria-hidden="true" class="callout lens">Lens tube</span>
+          <span aria-hidden="true" class="callout post">Post holder</span>
+          <span class="register tl" aria-hidden="true"></span><span class="register br" aria-hidden="true"></span>
+          <span class="ruler" aria-hidden="true"></span>
+        </div>
+        <figcaption id="study-caption" class="study-caption">
+          <span>WideField Assembly</span>
+          <div class="mode-control" aria-label="Component display" role="group" hidden>
+            <button type="button" aria-pressed="true" data-mode="render">Render</button>
+            <button type="button" aria-pressed="false" data-mode="outline">Outline</button>
+          </div>
+        </figcaption>
+      </figure>
+    </section>
+
+    <section id="work" class="work-section" aria-labelledby="work-title">
+      <div class="section-heading"><h2 id="work-title">Featured work</h2><span class="rule" aria-hidden="true"></span></div>
+      <article class="project-card">
+        <a class="card-art" href="projects/widefield-assembly/index.html" aria-label="Explore the WideField Assembly project">
+          <img src="assets/media/optics-detail.webp" alt="Close-up of the optical cage and lens mounts beneath the microscope platform." width="1330" height="627" loading="lazy">
+        </a>
+        <div class="card-copy">
+          <p class="meta blue">Microscope visualization</p>
+          <h3><a href="projects/widefield-assembly/index.html">WideField Assembly</a></h3>
+          <p>An interactive wide-field microscope in Unreal Engine. Inspect the optics, follow the build sequence, and snap components together on a virtual optical bench.</p>
+          <ul class="tags" aria-label="Project tools"><li>Unreal Engine 5.6</li><li>C++</li><li>Blender</li></ul>
+          <a class="text-link" href="projects/widefield-assembly/index.html">View project</a>
+        </div>
+      </article>
+    </section>
+
+    <section id="about" class="about-section" aria-labelledby="about-title">
+      <div><h2 id="about-title">About me<span>.</span></h2></div>
+      <div class="about-copy">
+        <p>At the University of Wisconsin–Madison, I’ve had the chance to bring my interests in game design and 3D art into a microscopy lab.</p>
+        <p>During my internship with the Open Source Program Office, I worked on a way to explore microscope hardware in Unreal Engine. A lens mount became something you could pick up, position, and connect to another part.</p>
+        <a class="text-link" href="https://ospo.wisc.edu/project-catalog/opentirf/">Internship at UW–Madison</a>
+      </div>
+    </section>
+  </main>
+  <footer><div class="wrap footer-row"><span>Mile Huang</span><a href="#top">Back to top</a></div></footer>
+</body>
+</html>
