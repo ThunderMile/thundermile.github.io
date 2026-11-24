@@ -1,0 +1,14 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "mile-portfolio-status",
+  "main": "src/worker.mjs",
+  "compatibility_date": "2026-03-01",
+  "durable_objects": { "bindings": [{ "name": "ROOM", "class_name": "StatusRoom" }] },
+  "migrations": [{ "tag": "v1", "new_sqlite_classes": ["StatusRoom"] }],
+  "vars": {
+    "LANYARD_USER_ID": "1002637103991111802",
+    "PUBLIC_HEART_RATE": "false",
+    "VIDEO_APPS": "[]",
+    "MUSIC_PROVIDER": "off"
+  }
+}

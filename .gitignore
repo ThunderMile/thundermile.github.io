@@ -1,0 +1,10 @@
+node_modules/
+.wrangler/
+.preview-data/
+.dev.vars
+.dev.vars.*
+.env
+.env.*
+riot.local.json
+xcuserdata/
+DerivedData/
