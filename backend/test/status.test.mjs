@@ -182,12 +182,15 @@ test("Discord Playing titles, source precedence, cache, expiry and successful cl
   activities = [{ type: 0, name: "League of Legends", details: "Swiftplay", state: "Private lobby detail" }];
   time += 8000;
   assert.equal((await read()).label, "Playing · League of Legends · Swiftplay");
-  activities = [{ type: 0, name: "League of Legends", application_id: leagueID,
+  activities = [{ type: 0, name: "League of Legends" }, { type: 0, name: "League of Legends", application_id: leagueID,
     details: "In Game", state: "Ranked Solo/Duo" }];
   time += 8000;
   const ranked = await read();
   assert.equal(ranked.label, "Playing · League of Legends · Ranked Solo/Duo");
   assert.equal(ranked.icon, "https://cdn.discordapp.com/app-icons/" + leagueID + "/" + leagueHash + ".png?size=64");
+  activities.push({ type: 0, name: "League of Legends", state: "ARAM" });
+  time += 8000;
+  assert.equal((await read()).label, "Playing · League of Legends");
   activities = [{ type: 0, name: "League of Legends", application_id: leagueID,
     details: "In Lobby", state: "Vi · 13:57" }];
   time += 8000;

@@ -57,17 +57,26 @@ export class Providers {
       const presence = await response.json();
       if (presence?.success !== true || !Array.isArray(presence.data?.activities))
         throw new Error("Invalid Lanyard presence");
-      const game = presence.data.activities.find(activity =>
+      const games = presence.data.activities.filter(activity =>
         activity?.type === 0 && typeof activity.name === "string" && activity.name.trim());
+      const [game] = games;
       if (!game) return null;
       const expiresAt = this.clock() + 30_000;
       const title = game.name.trim();
-      const mode = title === "League of Legends" ? [game.details, game.state]
+      const matching = games.filter(activity => activity.name.trim() === title);
+      const modes = title === "League of Legends" ? new Set(matching
+        .flatMap(activity => [activity.details, activity.state])
         .filter(value => typeof value === "string")
         .map(value => leagueModes.get(value.trim().toLowerCase()))
-        .find(Boolean) : null;
+        .filter(Boolean)) : null;
+      const mode = modes?.size === 1 ? modes.values().next().value : null;
       const label = "Playing · " + title + (mode ? " · " + mode : "");
-      return { kind: "gaming", label, expiresAt, icon: await discordArtwork(this, game) };
+      let icon;
+      for (const activity of matching) {
+        icon = await discordArtwork(this, activity);
+        if (icon) break;
+      }
+      return { kind: "gaming", label, expiresAt, icon };
     }, 8000);
   }
   steam() {
