@@ -8,3 +8,7 @@ node_modules/
 riot.local.json
 xcuserdata/
 DerivedData/
+*.mobileprovision
+*.p12
+*.p8
+*.xcresult

@@ -10,7 +10,7 @@
   <a class="skip" href="#main">Skip to content</a>
   <header class="masthead"><div class="wrap header-row">
     <a class="brand" href="index.html"><span class="monogram" aria-hidden="true">mh.</span> Mile Huang</a>
-    <nav aria-label="Main navigation"><a aria-current="page" href="index.html">Home</a><a href="experience/">Experience</a></nav>
+    <nav aria-label="Main navigation"><a aria-current="page" href="index.html">Home</a><a href="experience/">Experience</a><a href="projects/">Projects</a></nav>
   </div></header>
   <main id="main" class="wrap home-main">
     <div class="player-grid">
@@ -24,14 +24,19 @@
         <div class="activity-header"><h2 id="now-title">What I’m up to</h2>
           <button id="motion" type="button" hidden aria-label="Pause animation" title="Pause animation"><span aria-hidden="true">Ⅱ</span></button>
         </div>
-        <div class="scene-frame"><canvas id="character" width="144" height="80" aria-hidden="true"></canvas></div>
+        <div class="scene-frame"><canvas id="character" width="144" height="80" aria-hidden="true"></canvas>
+          <div id="heart" class="scene-heart" aria-label="Heart rate unavailable"><span id="heart-symbol" class="pixel-heart" aria-hidden="true">♡</span><span id="heart-value" aria-hidden="true">--</span></div>
+        </div>
         <div class="readout"><span class="status-lamp" aria-hidden="true"></span>
           <div><div class="activity-title"><p class="activity-label" id="activity-label" aria-live="polite">Idle</p><span id="game-icon" aria-hidden="true" hidden></span></div>
             <p id="workout-timer" class="substatus" role="timer" hidden></p>
-            <p id="heart" class="substatus" hidden></p>
+            <p id="bedtime-timer" class="substatus" role="timer" hidden></p>
+            <p id="sleep-observation" class="substatus" hidden></p>
+            <p id="last-update" class="substatus last-update">Last update —</p>
+            <p id="location" class="substatus" hidden></p>
           </div>
         </div>
-        <div id="music" class="music-line" hidden><span class="equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span id="track"></span></div>
+        <div id="music" class="music-line" hidden></div>
         <div class="console-base" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
       </section>
     </div>
@@ -46,4 +51,6 @@
       <p>These controls change this tab only.</p>
     </details>
   </main>
-  <footer><div class="wrap footer-row"><span>Mile Huang</span><a href="https://github.com/ThunderMile">GitHub</a></div></footer></body></html>
+  <footer><div class="wrap footer-row"><span>Mile Huang</span><div class="footer-links">
+    <a href="https://github.com/ThunderMile">Personal GitHub</a><a href="https://github.com/MileHuang">School GitHub</a>
+  </div></div></footer></body></html>

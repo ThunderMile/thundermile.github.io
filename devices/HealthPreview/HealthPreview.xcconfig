@@ -1,0 +1,18 @@
+PRODUCT_NAME = HealthPreview
+PRODUCT_BUNDLE_IDENTIFIER = io.github.thundermile.HealthPreview
+TARGETED_DEVICE_FAMILY = 1
+GENERATE_INFOPLIST_FILE = YES
+INFOPLIST_KEY_CFBundleDisplayName = Health Preview
+INFOPLIST_KEY_NSAppleMusicUsageDescription = Read the song playing in Music and share its title and artist on your portfolio when you enable sharing.
+INFOPLIST_KEY_NSHealthShareUsageDescription = Read saved runs, Apple Watch heart rate, and sleep for previews and the sync or sharing options you enable.
+INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = Set private Home and School regions and share a coarse place label when you choose.
+INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = Keep your shared Home, School or city label up to date when you travel or enter a configured region.
+INFOPLIST_KEY_UILaunchScreen_Generation = YES
+INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES
+CODE_SIGN_ENTITLEMENTS = HealthPreview/HealthPreview.entitlements
+PORTFOLIO_DEVICE_INFO_PLIST = HealthPreview/Info.plist
+INFOPLIST_FILE = $(PORTFOLIO_DEVICE_INFO_PLIST)
+INFOPLIST_FILE[sdk=iphonesimulator*] = HealthPreview/SimulatorInfo.plist
+CURRENT_PROJECT_VERSION = 1
+MARKETING_VERSION = 1.0
+CODE_SIGN_STYLE = Automatic

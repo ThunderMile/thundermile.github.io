@@ -34,12 +34,14 @@ test("Worker authentication, concurrent source updates, restart persistence and 
     for (const r of writes) assert.equal(r.status,200);
     let state = await read();
     assert.equal(state.activity.label,"Running"); assert.equal(state.music.track,"One"); assert.equal(state.heart,null);
-    assert.deepEqual(Object.keys(state).sort(),["activity","heart","music","serverTime"]);
+    assert.deepEqual(Object.keys(state).sort(),["activity","heart","lastUpdatedAt","music","serverTime"]);
+    assert.equal(state.lastUpdatedAt,at+10);
     await runtime.dispose(); runtime = new Miniflare(options);
     assert.equal((await read()).activity.label,"Running");
     await put("workout","end",15);
     assert.deepEqual(await (await put("workout","start",10,{kind:"running"})).json(),{applied:false});
     state = await read();
+    assert.equal(state.lastUpdatedAt,at+15);
     assert.equal(state.activity.label,"Playing · VALORANT"); assert.equal(state.activity.timer,undefined);
     await put("video","end",16,{app:"Test app"}); await put("riot","end",17); await put("music","end",18);
     state = await read(); assert.equal(state.activity,null); assert.equal(state.music,null);
@@ -71,6 +73,8 @@ test("Worker runtime fetches Lanyard and publishes only the game label", async (
       kind: "gaming", label: "Playing · Example title", expiresAt: status.activity?.expiresAt
     });
     assert(status.activity.expiresAt > status.serverTime);
+    assert(status.lastUpdatedAt <= status.serverTime);
+    assert.equal((await (await runtime.dispatchFetch("http://local/api/status")).json()).lastUpdatedAt, status.lastUpdatedAt);
     assert.equal(status.music, null);
     assert.equal(status.heart, null);
   } finally {

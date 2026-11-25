@@ -3,6 +3,7 @@ import assert from "node:assert/strict";
 import { applyEvent, publicStatus } from "../src/state.mjs";
 import { Providers } from "../src/providers.mjs";
 import { scheduledClass } from "../../assets/schedule.mjs";
+import { schedule } from "../../assets/profile-config.mjs";
 
 const base = Date.UTC(2026, 9, 10, 12);
 const env = { PUBLIC_HEART_RATE: "true", MUSIC_PROVIDER: "push", VIDEO_APPS: '["A","B"]' };
@@ -52,14 +53,15 @@ test("ordering, retries, tie-breaking, elapsed vs paused active time", () => {
 });
 test("sharing gates and measured-at expiry", () => {
   const { rows, set, get } = fixture();
+  assert.equal(get(0).heart, null);
   assert.throws(() => set("video", "start", 0, { app: "private" }));
   assert.throws(() => set("riot", "start", 1, { game: "Riot Client" }));
   set("workout", "start", 10, { kind: "badminton" });
-  set("heart", "reading", 9, { bpm: 120 });
-  assert.equal(get(20).heart, null);
-  set("heart", "reading", 20, { bpm: 120 });
+  set("heart", "reading", 9, { bpm: 120, measuredAt: new Date(base + 9).toISOString() });
+  assert.equal(get(20).heart.bpm, 120);
+  set("heart", "reading", 20, { bpm: 120, measuredAt: new Date(base + 20).toISOString() });
   assert.equal(get(30).heart.bpm, 120);
-  assert.equal(get(60_020).heart, null);
+  assert.equal(get(20 * 60_000 + 20).heart, null);
   assert.equal(publicStatus(rows, null, null, { ...env, PUBLIC_HEART_RATE: "false" }, base + 30).heart, null);
   set("music", "start", 2, { track: "Track", artist: "Artist" });
   assert.equal(get(90_002).music, null);
@@ -75,6 +77,26 @@ test("Chicago class wall-clock boundaries, semesters, DST and overnight entries"
   assert.equal(at("2027-01-04T15:00Z"), null);
   assert.equal(at("2026-03-10T05:15Z", { ...entry, start: "23:30", end: "00:30" }).kind, "class");
   assert.equal(scheduledClass([], Date.now()), null);
+});
+
+test("UW–Madison Fall 2026 meetings, instructional breaks, and one-time finals", () => {
+  const at = instant => scheduledClass(schedule, Date.parse(instant))?.label ?? null;
+  assert.equal(at("2026-11-24T11:00:00-06:00"), "On my schedule · ART 428 · Digital Imaging Studio");
+  assert.equal(at("2026-11-24T13:30:00-06:00"), null);
+  assert.match(at("2026-11-25T09:55:00-06:00"), /COMP SCI 544/);
+  assert.match(at("2026-11-25T12:05:00-06:00"), /COMP SCI 570/);
+  assert.match(at("2026-11-25T13:20:00-06:00"), /STAT 340/);
+  assert.match(at("2026-12-03T08:50:00-06:00"), /STAT 340/);
+  assert.equal(at("2026-09-07T09:55:00-05:00"), null);
+  assert.equal(at("2026-11-26T11:00:00-06:00"), null);
+  assert.equal(at("2026-11-27T09:55:00-06:00"), null);
+  assert.equal(at("2026-12-10T11:00:00-06:00"), null);
+  assert.equal(at("2026-12-11T09:55:00-06:00"), null);
+  assert.equal(at("2026-12-11T14:45:00-06:00"), "On my schedule · COMP SCI 544 · Final exam");
+  assert.equal(at("2026-12-11T16:45:00-06:00"), null);
+  assert.equal(at("2026-12-15T17:05:00-06:00"), "On my schedule · COMP SCI 570 · Final exam");
+  assert.equal(at("2026-12-17T10:05:00-06:00"), "On my schedule · STAT 340 · Final exam");
+  assert.equal(at("2026-12-18T14:45:00-06:00"), null);
 });
 test("Steam and Spotify polling, simultaneous requests, stop, and token rotation", async () => {
   let time = base, playing = true, calls = 0;
@@ -122,12 +144,16 @@ test("provider failures retain a finite TTL and honor rate-limit backoff", async
 
 test("Discord Playing titles, source precedence, cache, expiry and successful clear", async () => {
   const id = "123456789012345678";
+  const leagueID = "234567890123456789";
+  const leagueHash = "a".repeat(32);
   let time = base, calls = 0, unavailable = false;
   let activities = [
     { type: 2, name: "Music" }, { type: 4, name: "Custom Status" },
     { type: 0, name: "  " }, { type: 0, name: "Puzzle game", details: "Private session detail" }
   ];
   const providers = new Providers({ LANYARD_USER_ID: id }, {}, async url => {
+    if (url === "https://discord.com/api/v10/applications/" + leagueID + "/rpc")
+      return Response.json({ id: leagueID, name: "League of Legends", icon: leagueHash });
     assert.equal(url, "https://api.lanyard.rest/v1/users/" + id);
     calls++;
     if (unavailable) return new Response(null, { status: 503 });
@@ -153,6 +179,21 @@ test("Discord Playing titles, source precedence, cache, expiry and successful cl
   activities = [{ type: 0, name: "Another game" }];
   time += 8000;
   assert.equal((await read()).label, "Playing · Another game");
+  activities = [{ type: 0, name: "League of Legends", details: "Swiftplay", state: "Private lobby detail" }];
+  time += 8000;
+  assert.equal((await read()).label, "Playing · League of Legends · Swiftplay");
+  activities = [{ type: 0, name: "League of Legends", application_id: leagueID,
+    details: "In Game", state: "Ranked Solo/Duo" }];
+  time += 8000;
+  const ranked = await read();
+  assert.equal(ranked.label, "Playing · League of Legends · Ranked Solo/Duo");
+  assert.equal(ranked.icon, "https://cdn.discordapp.com/app-icons/" + leagueID + "/" + leagueHash + ".png?size=64");
+  activities = [{ type: 0, name: "League of Legends", application_id: leagueID,
+    details: "In Lobby", state: "Vi · 13:57" }];
+  time += 8000;
+  const lobby = await read();
+  assert.equal(lobby.label, "Playing · League of Legends");
+  assert.equal(lobby.icon, ranked.icon);
   activities = [{ type: 3, name: "Watching a stream" }];
   time += 8000;
   assert.equal((await read()).label, "On A");

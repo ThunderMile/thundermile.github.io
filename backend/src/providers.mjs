@@ -1,10 +1,17 @@
 import { discordArtwork, steamArtwork } from "./artwork.mjs";
 
+const leagueModes = new Map([
+  ["ranked", "Ranked"], ["ranked solo/duo", "Ranked Solo/Duo"], ["ranked flex", "Ranked Flex"],
+  ["swiftplay", "Swiftplay"], ["aram", "ARAM"], ["arena", "Arena"],
+  ["draft pick", "Draft Pick"], ["quickplay", "Quickplay"]
+]);
+
 // One instance per shared Durable Object. Concurrent readers share each in-flight poll.
 export class Providers {
   constructor(env, storage, request = fetch, clock = Date.now) {
     Object.assign(this, { env, storage, request, clock });
     this.cache = new Map();
+    this.gameUpdatedAt = null;
   }
   async cached(name, load, intervalMs = 20_000) {
     const now = this.clock();
@@ -14,7 +21,11 @@ export class Providers {
     if (entry.next > now) return entry.value;
     entry.pending = (async () => {
       try {
-        entry.value = await load();
+        const value = await load();
+        if ((entry.value?.kind === "gaming" || value?.kind === "gaming") && entry.value?.label !== value?.label) {
+          this.gameUpdatedAt = this.clock();
+        }
+        entry.value = value;
         entry.next = this.clock() + intervalMs;
       } catch (err) {
         entry.next = this.clock() + (err.retryMs || intervalMs);
@@ -50,7 +61,13 @@ export class Providers {
         activity?.type === 0 && typeof activity.name === "string" && activity.name.trim());
       if (!game) return null;
       const expiresAt = this.clock() + 30_000;
-      return { kind: "gaming", label: "Playing · " + game.name.trim(), expiresAt, icon: await discordArtwork(this, game) };
+      const title = game.name.trim();
+      const mode = title === "League of Legends" ? [game.details, game.state]
+        .filter(value => typeof value === "string")
+        .map(value => leagueModes.get(value.trim().toLowerCase()))
+        .find(Boolean) : null;
+      const label = "Playing · " + title + (mode ? " · " + mode : "");
+      return { kind: "gaming", label, expiresAt, icon: await discordArtwork(this, game) };
     }, 8000);
   }
   steam() {

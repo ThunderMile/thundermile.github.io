@@ -1,0 +1,271 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00000000000000000000008 /* HealthPreviewApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000007 /* HealthPreviewApp.swift */; };
+		A00000000000000000000024 /* HealthPreviewUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000023 /* HealthPreviewUITests.swift */; };
+		A00000000000000000000050 /* UploadService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000040 /* UploadService.swift */; };
+		A00000000000000000000051 /* WorkoutIntents.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000041 /* WorkoutIntents.swift */; };
+		A00000000000000000000052 /* HealthSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000042 /* HealthSync.swift */; };
+		A00000000000000000000053 /* PhoneAppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000043 /* PhoneAppDelegate.swift */; };
+		A00000000000000000000054 /* SyncSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000044 /* SyncSettingsView.swift */; };
+		A00000000000000000000055 /* WorkoutWire.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000045 /* WorkoutWire.swift */; };
+		A00000000000000000000056 /* HealthDeliveryDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = A00000000000000000000048 /* HealthDeliveryDiagnostics.swift */; };
+		A00000000000000000000057 /* CoarseLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000004A /* CoarseLocation.swift */; };
+		A00000000000000000000058 /* MusicSharing.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0000000000000000000004B /* MusicSharing.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		A00000000000000000000006 /* HealthPreview.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; path = HealthPreview.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000007 /* HealthPreviewApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthPreviewApp.swift; sourceTree = "<group>"; };
+		A00000000000000000000015 /* HealthPreview.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = HealthPreview.entitlements; sourceTree = "<group>"; };
+		A00000000000000000000018 /* HealthPreview.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = HealthPreview.xcconfig; sourceTree = "<group>"; };
+		A00000000000000000000022 /* HealthPreviewUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; path = HealthPreviewUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000023 /* HealthPreviewUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthPreviewUITests.swift; sourceTree = "<group>"; };
+		A00000000000000000000040 /* UploadService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadService.swift; sourceTree = "<group>"; };
+		A00000000000000000000041 /* WorkoutIntents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutIntents.swift; sourceTree = "<group>"; };
+		A00000000000000000000042 /* HealthSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthSync.swift; sourceTree = "<group>"; };
+		A00000000000000000000043 /* PhoneAppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneAppDelegate.swift; sourceTree = "<group>"; };
+		A00000000000000000000044 /* SyncSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SyncSettingsView.swift; sourceTree = "<group>"; };
+		A00000000000000000000045 /* WorkoutWire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutWire.swift; sourceTree = "<group>"; };
+		A00000000000000000000046 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A00000000000000000000047 /* SimulatorInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = SimulatorInfo.plist; sourceTree = "<group>"; };
+		A00000000000000000000048 /* HealthDeliveryDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDeliveryDiagnostics.swift; sourceTree = "<group>"; };
+		A00000000000000000000049 /* DevelopmentInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = DevelopmentInfo.plist; sourceTree = "<group>"; };
+		A0000000000000000000004A /* CoarseLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoarseLocation.swift; sourceTree = "<group>"; };
+		A0000000000000000000004B /* MusicSharing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicSharing.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		A00000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000005 /* HealthPreview */,
+				A00000000000000000000021 /* HealthPreviewUITests */,
+				A00000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000006 /* HealthPreview.app */,
+				A00000000000000000000022 /* HealthPreviewUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000005 /* HealthPreview */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000007 /* HealthPreviewApp.swift */,
+				A00000000000000000000015 /* HealthPreview.entitlements */,
+				A00000000000000000000018 /* HealthPreview.xcconfig */,
+				A00000000000000000000040 /* UploadService.swift */,
+				A00000000000000000000041 /* WorkoutIntents.swift */,
+				A00000000000000000000042 /* HealthSync.swift */,
+				A00000000000000000000043 /* PhoneAppDelegate.swift */,
+				A00000000000000000000044 /* SyncSettingsView.swift */,
+				A00000000000000000000045 /* WorkoutWire.swift */,
+				A00000000000000000000046 /* Info.plist */,
+				A00000000000000000000047 /* SimulatorInfo.plist */,
+				A00000000000000000000048 /* HealthDeliveryDiagnostics.swift */,
+				A00000000000000000000049 /* DevelopmentInfo.plist */,
+				A0000000000000000000004A /* CoarseLocation.swift */,
+				A0000000000000000000004B /* MusicSharing.swift */,
+			);
+			path = HealthPreview;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000021 /* HealthPreviewUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000023 /* HealthPreviewUITests.swift */,
+			);
+			path = HealthPreviewUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A00000000000000000000004 /* HealthPreview */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000011 /* Build configuration list for PBXNativeTarget "HealthPreview" */;
+			buildPhases = (
+				A00000000000000000000009 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HealthPreview;
+			productName = HealthPreview;
+			productReference = A00000000000000000000006 /* HealthPreview.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A00000000000000000000020 /* HealthPreviewUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000026 /* Build configuration list for PBXNativeTarget "HealthPreviewUITests" */;
+			buildPhases = (
+				A00000000000000000000025 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HealthPreviewUITests;
+			productName = HealthPreviewUITests;
+			productReference = A00000000000000000000022 /* HealthPreviewUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+			};
+			buildConfigurationList = A00000000000000000000010 /* Build configuration list for PBXProject "HealthPreview" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A00000000000000000000002;
+			productRefGroup = A00000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A00000000000000000000004 /* HealthPreview */,
+				A00000000000000000000020 /* HealthPreviewUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A00000000000000000000009 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000008 /* HealthPreviewApp.swift in Sources */,
+				A00000000000000000000050 /* UploadService.swift in Sources */,
+				A00000000000000000000051 /* WorkoutIntents.swift in Sources */,
+				A00000000000000000000052 /* HealthSync.swift in Sources */,
+				A00000000000000000000053 /* PhoneAppDelegate.swift in Sources */,
+				A00000000000000000000054 /* SyncSettingsView.swift in Sources */,
+				A00000000000000000000055 /* WorkoutWire.swift in Sources */,
+				A00000000000000000000056 /* HealthDeliveryDiagnostics.swift in Sources */,
+				A00000000000000000000057 /* CoarseLocation.swift in Sources */,
+				A00000000000000000000058 /* MusicSharing.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000025 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A00000000000000000000024 /* HealthPreviewUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A00000000000000000000012 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		A00000000000000000000014 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A00000000000000000000018 /* HealthPreview.xcconfig */;
+			buildSettings = {
+				PORTFOLIO_DEVICE_INFO_PLIST = HealthPreview/DevelopmentInfo.plist;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+			};
+			name = Debug;
+		};
+		A00000000000000000000016 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		A00000000000000000000017 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A00000000000000000000018 /* HealthPreview.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A00000000000000000000027 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.thundermile.HealthPreviewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HealthPreview;
+			};
+			name = Debug;
+		};
+		A00000000000000000000028 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = io.github.thundermile.HealthPreviewUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = HealthPreview;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A00000000000000000000010 /* Build configuration list for PBXProject "HealthPreview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000012 /* Debug */,
+				A00000000000000000000016 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000011 /* Build configuration list for PBXNativeTarget "HealthPreview" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000014 /* Debug */,
+				A00000000000000000000017 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000026 /* Build configuration list for PBXNativeTarget "HealthPreviewUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000027 /* Debug */,
+				A00000000000000000000028 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A00000000000000000000001 /* Project object */;
+}

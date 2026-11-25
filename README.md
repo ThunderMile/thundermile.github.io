@@ -1,6 +1,6 @@
 # Mile Huang’s portfolio
 
-[Home](https://thundermile.github.io/) shows Mile’s player card and shared activity. [Experience](https://thundermile.github.io/experience/) features the UW–Madison LOCI microscope visualization and links to the full project.
+[Home](https://thundermile.github.io/) shows Mile’s player card and shared activity. [Experience](experience/) features the UW–Madison LOCI microscope visualization. [Projects](projects/) includes the microscope visualization and the Personal Planner Agent prototype.
 
 The homepage uses plain HTML, CSS and JavaScript. It reads public activity from a Cloudflare Worker. Discord supplies the current game title and icon, and authenticated Apple Watch workout events take priority. The write token belongs in Cloudflare secrets and the private iPhone Shortcuts.
 

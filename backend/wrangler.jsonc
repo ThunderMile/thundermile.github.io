@@ -8,7 +8,8 @@
   "vars": {
     "LANYARD_USER_ID": "1002637103991111802",
     "PUBLIC_HEART_RATE": "false",
+    "PUBLIC_SLEEP_STAGE": "false",
     "VIDEO_APPS": "[]",
-    "MUSIC_PROVIDER": "off"
+    "MUSIC_PROVIDER": "push"
   }
 }

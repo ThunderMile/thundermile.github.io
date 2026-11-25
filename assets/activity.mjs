@@ -1,5 +1,6 @@
 import { statusUrl, schedule } from "./profile-config.mjs";
 import { scheduledClass } from "./schedule.mjs";
+import { bedtimeLine, heartAt, lastUpdateLine, musicLine, sleepObservation, workoutLine } from "./activity-display.mjs";
 
 const byId = id => document.getElementById(id);
 const canvas = byId("character");
@@ -34,12 +35,15 @@ function motion() {
     frame = (frame + 1) % window.characterFrames; draw();
   }, 160);
 }
-function elapsed(timer, now) {
-  const ms = timer.accruedMs + (timer.paused ? 0 : Math.max(0, now - timer.since));
-  const s = Math.floor(ms / 1000);
-  const two = n => String(n).padStart(2, "0");
-  const duration = (s >= 3600 ? Math.floor(s / 3600) + ":" : "") + two(Math.floor(s / 60) % 60) + ":" + two(s % 60);
-  return (timer.activeTime ? "Active time " : "Elapsed time ") + duration + (timer.paused ? " · Paused" : "");
+function updateHeart(sample, now) {
+  const reading = heartAt(sample, now);
+  const element = byId("heart");
+  element.classList.toggle("heart-fresh", Boolean(reading));
+  const label = reading ? `${reading.bpm} BPM` : "Heart rate unavailable";
+  if (element.getAttribute("aria-label") !== label) element.setAttribute("aria-label", label);
+  if (reading) element.style.setProperty("--beat-duration", `${60 / reading.bpm}s`);
+  textAt("heart-symbol", reading ? "♥" : "♡");
+  textAt("heart-value", reading ? label : "--");
 }
 const fallbackIcon = new URL("./media/gamepad.png", import.meta.url).href;
 let shownGame, shownIcon;
@@ -76,15 +80,27 @@ function render() {
   textAt("activity-label", main.label);
   gameIcon(main);
   byId("workout-timer").hidden = !main.timer;
-  textAt("workout-timer", main.timer ? elapsed(main.timer, now) : "");
-  const heart = !demo && main.timer && snapshot.heart?.expiresAt > now ? snapshot.heart : null;
-  byId("heart").hidden = !heart;
-  const age = heart ? Math.max(0, Math.floor((now - heart.measuredAt) / 1000)) : 0;
-  textAt("heart", heart ? heart.bpm + " BPM · measured " + age + "s ago" : "");
-  const music = local && previewMusic.checked ? { track: "Preview track", artist: "Preview artist" } :
-    !demo && snapshot.music?.expiresAt > now ? snapshot.music : null;
-  byId("music").hidden = !music;
-  textAt("track", music ? music.track + " — " + music.artist : "");
+  textAt("workout-timer", main.timer ? workoutLine(main.timer, now) : "");
+  const bedtime = main.kind === "bedtime" && Number.isFinite(main.startedAt);
+  byId("bedtime-timer").hidden = !bedtime;
+  textAt("bedtime-timer", bedtime ? bedtimeLine(main.startedAt, now) : "");
+  const observation = bedtime && !demo ? sleepObservation(snapshot.sleepStage, now) : "";
+  byId("sleep-observation").hidden = !observation;
+  textAt("sleep-observation", observation || "");
+  const activityUpdatedAt = snapshot.activityUpdatedAt ?? main.timer?.since ?? main.startedAt;
+  const lastUpdatedAt = snapshot.lastUpdatedAt ??
+    Math.max(...[activityUpdatedAt, snapshot.heart?.measuredAt].filter(Number.isFinite));
+  byId("last-update").hidden = Boolean(demo);
+  textAt("last-update", lastUpdateLine(lastUpdatedAt, now) || "Last update —");
+  updateHeart(snapshot.heart, now);
+  const place = !demo && snapshot.location?.expiresAt > now ? snapshot.location.label : "";
+  byId("location").hidden = !place;
+  textAt("location", place);
+  const music = local && previewMusic.checked ? { track: "Preview track", artist: "Preview artist", expiresAt: Infinity } :
+    demo ? null : snapshot.music;
+  const song = musicLine(music, now);
+  byId("music").hidden = !song;
+  textAt("music", song);
 }
 async function poll() {
   clearTimeout(pollTimeout);
