@@ -1,5 +1,5 @@
-import { statusUrl, schedule } from "./profile-config.mjs";
-import { scheduledClass } from "./schedule.mjs";
+import { statusUrl, schedule } from "./profile-config.mjs?v=20261124";
+import { scheduledClass } from "./schedule.mjs?v=20261124";
 import { bedtimeLine, heartAt, lastUpdateLine, musicLine, sleepObservation, workoutLine } from "./activity-display.mjs";
 
 const byId = id => document.getElementById(id);
