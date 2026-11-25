@@ -15,7 +15,8 @@ export default {
       if (request.method !== "GET") return json({ error: "Use GET." }, 405, { ...publicHeaders, Allow: "GET" });
     } else if (path === "/api/events" || path === healthPath) {
       if (request.method !== "POST") return json({ error: "Use POST." }, 405, { Allow: "POST" });
-      if (!env.WRITE_TOKEN || request.headers.get("authorization") !== "Bearer " + env.WRITE_TOKEN)
+      const authorization = request.headers.get("authorization");
+      if (![env.WRITE_TOKEN, env.IPHONE_WRITE_TOKEN].some(token => token && authorization === "Bearer " + token))
         return json({ error: "Authentication required." }, 401);
       if (request.headers.get("content-type")?.split(";")[0].trim() !== "application/json")
         return json({ error: "Use application/json." }, 415);

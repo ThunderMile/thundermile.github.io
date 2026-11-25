@@ -12,10 +12,12 @@ test("Worker authentication, concurrent source updates, restart persistence and 
   await mkdir(scratch, { recursive: true });
   const folder = await mkdtemp(join(scratch, "api-test-"));
   const token = randomBytes(32).toString("hex");
+  const phoneToken = randomBytes(32).toString("hex");
   const options = { modules: true, scriptPath: join(base, "src/worker.mjs"), modulesRoot: join(base, "src"),
     compatibilityDate: "2026-03-01", host: "127.0.0.1", durableObjectsPersist: folder,
     durableObjects: { ROOM: { className: "StatusRoom", useSQLite: true } },
-    bindings: { WRITE_TOKEN: token, MUSIC_PROVIDER: "push", VIDEO_APPS: '["Test app"]', PUBLIC_HEART_RATE: "false" } };
+    bindings: { WRITE_TOKEN: token, IPHONE_WRITE_TOKEN: phoneToken, MUSIC_PROVIDER: "push",
+      VIDEO_APPS: '["Test app"]', PUBLIC_HEART_RATE: "false" } };
   let runtime = new Miniflare(options);
   const at = Date.now() - 2000;
   const put = (source,action,ms,extra={},bearer=token) => runtime.dispatchFetch("http://local/api/events", {
@@ -29,7 +31,7 @@ test("Worker authentication, concurrent source updates, restart persistence and 
     assert.equal((await put("video","start",2,{app:"Unshared"})).status,400);
     const writes = await Promise.all([
       put("workout","start",10,{kind:"running"}), put("riot","start",9,{game:"VALORANT"}),
-      put("video","start",7,{app:"Test app"}), put("music","start",8,{track:"One",artist:"Two"})
+      put("video","start",7,{app:"Test app"}), put("music","start",8,{track:"One",artist:"Two"},phoneToken)
     ]);
     for (const r of writes) assert.equal(r.status,200);
     let state = await read();
