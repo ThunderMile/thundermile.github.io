@@ -7,7 +7,7 @@
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["StatusRoom"] }],
   "vars": {
     "LANYARD_USER_ID": "1002637103991111802",
-    "PUBLIC_HEART_RATE": "false",
+    "PUBLIC_HEART_RATE": "true",
     "PUBLIC_SLEEP_STAGE": "false",
     "VIDEO_APPS": "[]",
     "MUSIC_PROVIDER": "push"
