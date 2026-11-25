@@ -26,24 +26,55 @@ test("Apple Music observations render beside activity, clear and expire at the s
 
   send("music", "start", 1000, { track: "First fixture song", artist: "Fixture artist" });
   assert.equal(status(1500).activity.label, "Running");
-  assert.equal(line(1500), "♪ First fixture song — Fixture artist");
+  assert.equal(line(1500), "Now playing · First fixture song — Fixture artist");
   send("music", "start", 2000, { track: "Second fixture song" });
-  assert.equal(line(2100), "♪ Second fixture song");
+  assert.equal(line(2100), "");
   assert.equal(status(2100, { ...env, MUSIC_PROVIDER: "off" }).music, null);
   send("music", "end", 3000);
   assert.equal(line(3100), "");
   assert.equal(send("music", "start", 4000, { at: iso(2000), track: "Delayed fixture song" }), false);
   assert.equal(line(4000), "");
 
-  send("music", "start", 5000, { track: "Second fixture song" });
-  send("music", "start", 35000, { track: "Second fixture song" });
+  send("music", "start", 5000, { track: "Second fixture song", artist: "Second artist" });
+  send("music", "start", 35000, { track: "Second fixture song", artist: "Second artist" });
   const snapshot = status(36000).music;
   assert.equal(snapshot.expiresAt, base + 125000);
-  assert.equal(musicLine(snapshot, base + 124999), "♪ Second fixture song");
+  assert.equal(musicLine(snapshot, base + 124999), "Now playing · Second fixture song — Second artist");
   assert.equal(musicLine(snapshot, base + 125000), "");
   assert.equal(line(125000), "");
   assert.equal(send("music", "start", 130000, { at: iso(39000), track: "Expired fixture song" }), false);
   assert.equal(line(130000), "");
+});
+
+test("one music row falls back to independent verified QQ history on stop, missing metadata and expiry", () => {
+  const { rows, send, status } = fixture();
+  const line = (snapshot, at) => musicLine(snapshot.music, base + at, snapshot.recentQQMusic);
+  send("riot", "start", 0, { game: "VALORANT" });
+  assert.equal(line(status(1), 1), "");
+  const recent = { track: "QQ fixture", artist: "QQ artist" };
+  rows.qqRecent = { ...recent, verified: false };
+  assert.equal(status(1).recentQQMusic, undefined);
+  assert.throws(() => send("qqRecent", "start", 1, { ...recent, verified: true }));
+  rows.qqRecent.verified = true;
+  assert.deepEqual(status(1).recentQQMusic, recent);
+  const fallback = "Recently played · QQ fixture — QQ artist";
+  assert.equal(line(status(1), 1), fallback);
+  const apple = { track: "Apple fixture", artist: "Apple artist" };
+  send("music", "start", 1000, apple);
+  assert.equal(line(status(1000), 1000), "Now playing · Apple fixture — Apple artist");
+  assert.equal(status(1000).activity.kind, "gaming");
+  send("music", "end", 2000);
+  assert.equal(line(status(2000), 2000), fallback);
+  send("music", "start", 3000, apple);
+  const cached = status(3000);
+  assert.equal(line(cached, 92999), "Now playing · Apple fixture — Apple artist");
+  assert.equal(line(cached, 93000), fallback);
+  assert.equal(line(status(93000), 93000), fallback);
+  send("music", "start", 94000, apple);
+  send("music", "start", 95000, { track: "Incomplete", artist: " " });
+  assert.equal(line(status(95000), 95000), fallback);
+  rows.qqRecent.artist = "";
+  assert.equal(line(status(95001), 95001), "");
 });
 
 test("native Workout Shortcut starts the requested fox and elapsed timer, then restores gaming", () => {

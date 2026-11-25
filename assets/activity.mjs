@@ -1,6 +1,6 @@
 import { statusUrl, schedule } from "./profile-config.mjs?v=20261124";
 import { scheduledClass } from "./schedule.mjs?v=20261124";
-import { bedtimeLine, heartAt, lastUpdateLine, musicLine, sleepObservation, workoutLine } from "./activity-display.mjs";
+import { bedtimeLine, heartAt, lastUpdateLine, musicLine, sleepObservation, workoutLine } from "./activity-display.mjs?v=20261125";
 
 const byId = id => document.getElementById(id);
 const canvas = byId("character");
@@ -96,9 +96,9 @@ function render() {
   const place = !demo && snapshot.location?.expiresAt > now ? snapshot.location.label : "";
   byId("location").hidden = !place;
   textAt("location", place);
-  const music = local && previewMusic.checked ? { track: "Preview track", artist: "Preview artist", expiresAt: Infinity } :
+  const music = local && previewMusic.checked ? { source: "appleMusic", track: "Preview track", artist: "Preview artist", expiresAt: Infinity } :
     demo ? null : snapshot.music;
-  const song = musicLine(music, now);
+  const song = musicLine(music, now, demo ? null : snapshot.recentQQMusic);
   byId("music").hidden = !song;
   textAt("music", song);
 }

@@ -22,9 +22,11 @@ export function heartAt(sample, now) {
     Number.isFinite(sample.expiresAt) && now < sample.expiresAt ? sample : null;
 }
 
-export function musicLine(music, now) {
-  if (!music?.track || !(music.expiresAt > now)) return "";
-  return "♪ " + music.track + (music.artist ? " — " + music.artist : "");
+export function musicLine(music, now, recentQQMusic) {
+  const playing = music?.source === "appleMusic" && music.expiresAt > now && music.track && music.artist;
+  const song = playing ? music : recentQQMusic;
+  if (!song?.track || !song.artist) return "";
+  return (playing ? "Now playing · " : "Recently played · ") + song.track + " — " + song.artist;
 }
 
 export function bedtimeLine(startedAt, now) {

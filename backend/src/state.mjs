@@ -17,6 +17,11 @@ function cleanText(value) {
     value.length <= 120 && !/[\u0000-\u001f\u007f]/.test(value), "Expected a short, nonempty label.");
   return value.trim();
 }
+function songMetadata(item) {
+  if (typeof item?.track !== "string" || typeof item.artist !== "string") return null;
+  const track = item.track.trim(), artist = item.artist.trim();
+  return track && artist ? { track, artist } : null;
+}
 export function allowedApps(env) {
   const apps = JSON.parse(env.VIDEO_APPS || "[]");
   return Array.isArray(apps) ? apps.filter(value => typeof value === "string") : [];
@@ -107,7 +112,8 @@ export function applyEvent(rows, input, env, now) {
     case "music":
       next.track = cleanText(input.track);
       requireValue(!["itunes media", "no items"].includes(next.track.toLowerCase()), "Expected a song title.");
-      if (input.artist != null) next.artist = cleanText(input.artist);
+      if (input.artist != null && !(typeof input.artist === "string" && !input.artist.trim()))
+        next.artist = cleanText(input.artist);
       break;
     case "location":
       requireValue(["Home", "School", "Travel"].includes(input.place), "Unknown coarse location.");
@@ -141,11 +147,15 @@ export function publicStatus(rows, steam, spotify, env, now, discord = null, gam
   const sleepStage = env.PUBLIC_SLEEP_STAGE === "true" && main?.kind === "bedtime" && fresh(stage, now) &&
     stage.at <= now && stage.at >= main.at ?
     { stage: stage.stage, startedAt: stage.startedAt, endedAt: stage.at, expiresAt: stage.expiresAt } : null;
-  const track = env.MUSIC_PROVIDER === "push" ? rows.music : spotify;
-  const music = fresh(track, now) ?
-    { track: track.track, ...(track.artist && { artist: track.artist }), expiresAt: track.expiresAt } : null;
+  const pushed = env.MUSIC_PROVIDER === "push";
+  const track = pushed ? rows.music : spotify;
+  const playing = fresh(track, now) && (!pushed || (track.action === "start" && track.at <= now));
+  const song = playing && songMetadata(track);
+  const music = song ? { ...song, source: pushed ? "appleMusic" : "spotify", expiresAt: track.expiresAt } : null;
+  // Reserved for verified provider history. Device events cannot write this record.
+  const recentQQMusic = rows.qqRecent?.verified === true ? songMetadata(rows.qqRecent) : null;
   const location = fresh(rows.location, now) ?
     { label: rows.location.label, expiresAt: rows.location.expiresAt } : null;
   return { serverTime: now, activity, music, heart, ...(sleepStage && { sleepStage }), ...(location && { location }),
-    ...(Number.isFinite(lastUpdatedAt) && { lastUpdatedAt }) };
+    ...(recentQQMusic && { recentQQMusic }), ...(Number.isFinite(lastUpdatedAt) && { lastUpdatedAt }) };
 }
